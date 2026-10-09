@@ -40,6 +40,7 @@ func main() {
 	cmds.handlers = make(map[string]func(*state, command) error)
 	cmds.register("register", handlerRegister)
 	cmds.register("login", handlerLogin)
+	cmds.register("reset", handlerReset)
 
 	args := os.Args
 	if len(args) < 2 {
