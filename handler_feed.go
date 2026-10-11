@@ -10,15 +10,15 @@ import (
 	"github.com/sharipovr/blog-aggregator-go/internal/database"
 )
 
-func handlerAddFeed(s *state, cmd command) error {
+func handlerAddFeed(s *state, cmd command, user database.User) error {
 	if len(cmd.args) < 2 {
 		return errors.New("add feed expects two arguments, the name and url")
 	}
 
-	user, err := s.db.GetUser(context.Background(), s.config.CurrentUserName)
-	if err != nil {
-		return err
-	}
+	// user, err := s.db.GetUser(context.Background(), s.config.CurrentUserName)
+	// if err != nil {
+	// 	return err
+	// }
 
 	feed, err := s.db.CreateFeed(context.Background(), database.CreateFeedParams{ID: uuid.New(), CreatedAt: time.Now(), UpdatedAt: time.Now(), Name: cmd.args[0], Url: cmd.args[1], UserID: user.ID})
 	if err != nil {
@@ -58,7 +58,7 @@ func handlerGetFeeds(s *state, cmd command) error {
 	return nil
 }
 
-func handlerFollow(s *state, cmd command) error {
+func handlerFollow(s *state, cmd command, user database.User) error {
 	if len(cmd.args) < 1 {
 		return errors.New("follow expects single argument, the url")
 	}
@@ -68,10 +68,10 @@ func handlerFollow(s *state, cmd command) error {
 		return err
 	}
 
-	user, err := s.db.GetUser(context.Background(), s.config.CurrentUserName)
-	if err != nil {
-		return err
-	}
+	// user, err := s.db.GetUser(context.Background(), s.config.CurrentUserName)
+	// if err != nil {
+	// 	return err
+	// }
 
 	follow, err := s.db.CreateFeedFollow(context.Background(), database.CreateFeedFollowParams{
 		ID:        uuid.New(),
@@ -88,11 +88,11 @@ func handlerFollow(s *state, cmd command) error {
 	return nil
 }
 
-func handlerFollowing(s *state, cmd command) error {
-	user, err := s.db.GetUser(context.Background(), s.config.CurrentUserName)
-	if err != nil {
-		return err
-	}
+func handlerFollowing(s *state, cmd command, user database.User) error {
+	// user, err := s.db.GetUser(context.Background(), s.config.CurrentUserName)
+	// if err != nil {
+	// 	return err
+	// }
 
 	feedFollows, err := s.db.GetFeedFollowsForUser(context.Background(), user.ID)
 	if err != nil {
