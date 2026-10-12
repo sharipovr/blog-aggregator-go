@@ -93,7 +93,7 @@ func handlerFollowing(s *state, cmd command, user database.User) error {
 
 func handlerUnfollow(s *state, cmd command, user database.User) error {
 	if len(cmd.args) < 1 {
-		return errors.New("unfollow expects single argumant, the url")
+		return errors.New("unfollow expects single argument, the url")
 	}
 	url := cmd.args[0]
 	feed, err := s.db.GetFeedByURL(context.Background(), url)
